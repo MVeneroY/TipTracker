@@ -1,6 +1,19 @@
 const jwt = require("jsonwebtoken");
 const { TokenExpiredError } = jwt;
 
+/**
+ * @function catchError()
+ * 
+ * @brief
+ * 
+ * @param   {string}    email 
+ * @param   {Error}     err 
+ * @param   {any}       req 
+ * @param   {any}       res 
+ * @param   {any}       next 
+ * 
+ * @returns None
+ */
 const catchError = (email: string, err: Error, req: any, res: any, next: any) => {
   if (err instanceof TokenExpiredError) {
     console.log("Token being refreshed for user: " + email);
@@ -24,6 +37,17 @@ const catchError = (email: string, err: Error, req: any, res: any, next: any) =>
   
 };
 
+/**
+ * @function verifyJWT()
+ * 
+ * @brief
+ * 
+ * @param   {any}   req 
+ * @param   {any}   res 
+ * @param   {any}   next 
+ * 
+ * @returns {any}
+ */
 export const verifyJWT = (req: any, res: any, next: any) => {
   // Grab the tokens from the header
   const authToken = req.header("auth-token");

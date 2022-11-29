@@ -9,8 +9,6 @@ const jwt = require("jsonwebtoken");
 import { verifyJWT } from "./utils/jwt";
 import { geo } from "./utils/geo";
 import { email } from "./utils/email";
-import { compareSync } from "bcrypt";
-import { LatLngLiteral } from "@googlemaps/google-maps-services-js";
 var format = require("date-fns/format");
 
 const DEBUG = true;
@@ -275,7 +273,7 @@ app.get("/profile/:userId", async (req, res) => {
     res.status(404).send({message: "User profile not found."});
     return;
   }
-  res.status(200).send({data: JSON.stringify(result), message: "User profile retrieved successfully."});
+  res.status(200).send({data: result, message: "User profile retrieved successfully."});
 });
 
 app.put("/profile/:userId", async (req, res) => {

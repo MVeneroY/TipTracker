@@ -1,8 +1,6 @@
 import postgres from "postgres";
 import { AuthRequestBody, ProfileReqBody, Car, Address, latlng } from "../models/models";
 import bcrypt from "bcrypt";
-import { add } from "date-fns";
-// import { Result } from "ts-postgres/dist/src/result";
 
 const saltRounds = 10;
 
@@ -201,7 +199,7 @@ export const utils = {
    * 
    * @param     {string}    userId 
    * 
-   * @returns   {}
+   * @returns   {Map | Boolean}
    * 
    * @example
    *      await getProfile(100);
@@ -253,7 +251,7 @@ export const utils = {
    * 
    * @param   {AuthRequestBody}   user 
    * 
-   * @returns {}
+   * @returns {Map | null}
    * 
    * @example
    *      await getAccount({ email: "123@gmail.com", password: "0987654" });
@@ -313,7 +311,7 @@ export const utils = {
    * @param   {number}    userId
    * @param   {number}    period 
    * 
-   * @returns {}
+   * @returns {Map[]}
    * 
    * @example
    *      getTips(user1, 7);
@@ -400,7 +398,7 @@ export const utils = {
    * @param   {number}    cost_to_own 
    * @param   {Car}       car
    * 
-   * @returns 
+   * @returns {number | null}
    * 
    * @example
    *      await addVehicle(16, 55.34, { make: "Honda", model: "Civic", year: "2011" });
@@ -481,7 +479,7 @@ export const utils = {
    * @param   {number}    vehicle_id 
    * @param   {any}       vehicle 
    * 
-   * @returns 
+   * @returns {Boolean}
    * 
    * @example
    *      await patchVehicle(12, { make: "Toyota" });
@@ -509,7 +507,7 @@ export const utils = {
    * @param   {Address}   address 
    * @param   {latlng}    latlng 
    * 
-   * @returns 
+   * @returns {number | null}
    * 
    * @example
    *      await addLocation(address1, latlng1);
@@ -546,7 +544,7 @@ export const utils = {
    * 
    * @param   {number}    location_id 
    * 
-   * @returns {}
+   * @returns {Map | null}
    * 
    * @example
    *      await getLocation(14);
@@ -629,7 +627,7 @@ export const utils = {
    * 
    * @param   {any}   address 
    * 
-   * @returns {number}
+   * @returns {number | null}
    * 
    * @example
    *      await searchLocation(profile1);
@@ -659,6 +657,21 @@ export const utils = {
     }
   },
 
+  /**
+   * @function searchLocationGeo()
+   * 
+   * @brief   This function looks through the location entries in the database and matches their
+   *          latitudes and longitudes against the fields 'lat' and 'lng' in the 'latlng' input. If
+   *          a match is found, it returns the location_id of the matching entry. The function
+   *          returns null otherwise
+   * 
+   * @param   {latlng}    latlng 
+   * 
+   * @returns {number | null}
+   * 
+   * @example
+   *      await searchLocationGeo({ 23.123, -21.982 });
+   */
   searchLocationGeo: async(latlng: latlng) => {
     try {
       const result = await sql`SELECT * FROM locations
@@ -684,7 +697,7 @@ export const utils = {
    * 
    * @param   {number}    location_id 
    * 
-   * @returns {number}
+   * @returns {number | null}
    * 
    * @example
    *      await locationUses(77);
@@ -710,7 +723,7 @@ export const utils = {
    * @brief   This function returns the tip amount and location (latitude and longitude) of all the
    *          tips currently in the db.
    * 
-   * @returns {}
+   * @returns {Map[]}
    * 
    * @example
    *      await getMapData()

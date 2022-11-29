@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 export const email = {
 
     /**
-     * @function    :   sendVerification()        
+     * @function sendVerification()        
      *   
      * @brief   This function sends a verification email to the email address the user sent during
      *          the registration step. This email contains a verification link with a token that 
@@ -13,10 +13,10 @@ export const email = {
      * @param   {number}    user_id     id of user for accounts table in database
      * @param   {string}    token       jwt token for building verification link
      * 
-     * @return  None
+     * @return  {Error}
      * 
      * @example
-     *      sendVerification("example@example.com", 31, token1);
+     *      await sendVerification("example@example.com", 31, token1);
      *      await sendVerification("foo@bar.net", 100, token2);
      */
     sendVerification: async (recipient: string, user_id: number, token: string) => {

@@ -1,5 +1,4 @@
 import { Client, GeocodeRequest, LatLngLiteral, ReverseGeocodeRequest } from "@googlemaps/google-maps-services-js";
-import { geocode } from "@googlemaps/google-maps-services-js/dist/geocode/geocode";
 import {Address, latlng} from "../models/models";
 
 const client = new Client();
@@ -53,7 +52,7 @@ export const geo = {
      * 
      * @param   {latlng} latlng
      * 
-     * @returns {}
+     * @returns {Promise<Address>}
      * 
      * @example
      *      await reverseGeocode(28.5971482, -81.203793);
